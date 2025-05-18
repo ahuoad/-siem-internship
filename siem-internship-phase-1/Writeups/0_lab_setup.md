@@ -17,7 +17,7 @@ Verify proper log collection from Windows to Wazuh SIEM and establish baseline l
 
 ## Setup Steps
 
-Ubuntu SIEM Server Configuration
+### Ubuntu SIEM Server Configuration
 
 1. Update System Packages
 
@@ -60,11 +60,11 @@ sudo apt install -y wazuh-manager
 sudo systemctl status wazuh-manager
 ```
 
-Expected output: `Active: active (running)`
-
+ ![ubuntu_wazuh_status](https://github.com/user-attachments/assets/c47970d5-d383-4fc3-8ddc-5c7baa1274f0)
+ 
 ---
 
-Windows Target Machine Setup
+### Windows Target Machine Setup
 
 1. Install Wazuh Agent
 
@@ -83,6 +83,9 @@ Edit `C:\Program Files (x86)\ossec-agent\ossec.conf`:
 </server>
 ```
 
+![editing_ossec_conf](https://github.com/user-attachments/assets/2dc218d4-8d26-4915-a162-e1923f85dd36)
+
+
 3. Restart Agent Service
 
 ```powershell
@@ -95,8 +98,8 @@ Restart-Service -Name WazuhSvc
 Get-Service -Name WazuhSvc | Select-Object Status
 ```
 
-Expected output: `Status: Running`
-
+ ![windows_agent_installed](https://github.com/user-attachments/assets/7a17bec2-2b27-45a2-8e6b-492602ad6c14)
+ 
 ---
 
 Verification & Enhanced Logging
@@ -107,8 +110,10 @@ Verification & Enhanced Logging
 # Tail the Wazuh alert log to see incoming agent data
 sudo tail -f /var/ossec/logs/alerts/alerts.log
 ```
-
 Look for new events from the Windows agent
+
+![wazuh_alerts_sample](https://github.com/user-attachments/assets/26d15d4e-6b0c-4ff7-98c0-0d6d14e13701)
+
 
 2. Install Sysmon on Windows
 
@@ -138,22 +143,14 @@ curl -o sysmonconfig.xml https://raw.githubusercontent.com/SwiftOnSecurity/sysmo
 # View the latest Sysmon event in Event Viewer
 Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 1
 ```
-
-## Evidence of Successful Setup
-- **Wazuh Manager Running**
-  
- ![ubuntu_wazuh_status](https://github.com/user-attachments/assets/c47970d5-d383-4fc3-8ddc-5c7baa1274f0)
-
-- **Wazuh Alert**
-  
-![wazuh_alerts_sample](https://github.com/user-attachments/assets/26d15d4e-6b0c-4ff7-98c0-0d6d14e13701)
-
--**Windows Agent Connected**
-
- ![windows_agent_installed](https://github.com/user-attachments/assets/7a17bec2-2b27-45a2-8e6b-492602ad6c14)
-
--**Sysmon server status**
-
 ![sysmon_service_started](https://github.com/user-attachments/assets/fcbd14f6-a961-4097-a0b1-5446c0f97249)
+
+
+  
+
+
+
+
+
 
 
