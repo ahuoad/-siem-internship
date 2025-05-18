@@ -6,14 +6,13 @@ Initial configuration of a cybersecurity lab with Wazuh SIEM on Ubuntu and Windo
 ## Objective  
 Verify proper log collection from Windows to Wazuh SIEM and establish baseline logging capabilities.
 
-## Tools Used  
-- **SIEM**: Wazuh 4.7 (Ubuntu 20.04 LTS)  
-- **Log Sources**:  
-  - Windows Event Log (Security/Sysmon)  
-  - Wazuh Agent  
-- **Lab Setup**:  
-  - VMware VMs: Windows 10 (Target) + Ubuntu (SIEM)  
-  - Network: Bridged 
+### Tools Used
+| Component       | Tool/Version         | Purpose                        |
+|-----------------|----------------------|--------------------------------|
+| SIEM            | Wazuh 4.7            | Log collection & analysis      |
+| Target OS       | Windows 10/11        | Attack simulation              |
+| Logging         | Sysmon + Wazuh Agent | Process/network monitoring     |
+| Virtualization  | VMware               | Host VMs                       |
 
 
 ## Config file
