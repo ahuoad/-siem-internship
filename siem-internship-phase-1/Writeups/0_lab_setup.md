@@ -16,43 +16,47 @@ Verify proper log collection from Windows to Wazuh SIEM and establish baseline l
 
 
 ## Setup Steps
-### **Ubuntu SIEM Server Configuration**:
 
-
-### **Windows Target Machine Configuration**:
-
+Ubuntu SIEM Server Configuration
 
 1. Update System Packages
 
 ```bash
+# Update package index and upgrade all packages
 sudo apt update && sudo apt upgrade -y
 ```
 
 2. Install Wazuh Manager
 
 ```bash
+# Download and import Wazuh GPG key
 curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import
 ```
 
 ```bash
+# Set correct permissions on the keyring file
 sudo chmod 644 /usr/share/keyrings/wazuh.gpg
 ```
 
 ```bash
+# Add Wazuh repository to sources list
 echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list
 ```
 
 ```bash
+# Update package list with Wazuh repo
 sudo apt update
 ```
 
 ```bash
+# Install the Wazuh manager
 sudo apt install -y wazuh-manager
 ```
 
 3. Verify Wazuh Manager Installation
 
 ```bash
+# Check if the Wazuh manager service is active
 sudo systemctl status wazuh-manager
 ```
 
@@ -72,6 +76,7 @@ Windows Target Machine Setup
 Edit `C:\Program Files (x86)\ossec-agent\ossec.conf`:
 
 ```xml
+<!-- Configure agent to connect to Wazuh manager -->
 <server>
   <address>YOUR_UBUNTU_IP</address>
   <port>1514</port>
@@ -81,10 +86,12 @@ Edit `C:\Program Files (x86)\ossec-agent\ossec.conf`:
 3. Restart Agent Service
 
 ```powershell
+# Restart the Wazuh agent service
 Restart-Service -Name WazuhSvc
 ```
 
 ```powershell
+# Check the current status of the Wazuh service
 Get-Service -Name WazuhSvc | Select-Object Status
 ```
 
@@ -97,6 +104,7 @@ Verification & Enhanced Logging
 1. Check Log Forwarding from Agent
 
 ```bash
+# Tail the Wazuh alert log to see incoming agent data
 sudo tail -f /var/ossec/logs/alerts/alerts.log
 ```
 
@@ -110,25 +118,26 @@ Look for new events from the Windows agent
 3. Configure and Run Sysmon
 
 ```powershell
+# Navigate to Sysmon directory
 cd C:\Sysmon
 ```
 
 ```powershell
+# Download default Sysmon config from SwiftOnSecurity
 curl -o sysmonconfig.xml https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml
 ```
 
 ```powershell
+# Install Sysmon with the config file
 .\Sysmon.exe -accepteula -i sysmonconfig.xml
 ```
 
 4. Verify Sysmon Logging
 
 ```powershell
+# View the latest Sysmon event in Event Viewer
 Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 1
 ```
-
-Should show a Sysmon startup or configuration event
-
 
 ## Evidence of Successful Setup
 - **Wazuh Manager Running**
