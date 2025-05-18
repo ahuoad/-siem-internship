@@ -6,7 +6,7 @@ Initial configuration of a cybersecurity lab with Wazuh SIEM on Ubuntu and Windo
 ## Objective  
 Verify proper log collection from Windows to Wazuh SIEM and establish baseline logging capabilities.
 
-### Tools Used
+## Tools Used
 | Component       | Tool/Version         | Purpose                        |
 |-----------------|----------------------|--------------------------------|
 | SIEM            | Wazuh 4.7            | Log collection & analysis      |
@@ -15,11 +15,23 @@ Verify proper log collection from Windows to Wazuh SIEM and establish baseline l
 | Virtualization  | VMware               | Host VMs                       |
 
 
-## Config file
-- **ossec-agent/ossec.conf**
+## Setup Steps
+### **Ubuntu SIEM Server Configuration**:
+1. **Update System Packages**
+sudo apt update && sudo apt upgrade -y
+2. **Add Wazuh repository key**
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg
 
-  The Agent was Configured to Point to Ubuntu by setting the ip address of ubuntu as the server : 
-  ![editing_ossec_conf](https://github.com/user-attachments/assets/61c976b3-b823-4dd7-a725-70807078b083)
+3. **Add Wazuh APT repository**
+echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list
+
+4. **Install Wazuh Manager**
+sudo apt update
+sudo apt install -y wazuh-manager
+
+### **Windows Target Machine Configuration**:
+
+
 
 
 ## Evidence of Successful Setup
