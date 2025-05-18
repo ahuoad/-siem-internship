@@ -30,7 +30,7 @@ Verify proper log collection from Windows to Wazuh SIEM and establish baseline l
 
 - **Wazuh Alert**
   
-  ![wazuh_alerts_sample](https://github.com/user-attachments/assets/26d15d4e-6b0c-4ff7-98c0-0d6d14e13701)
+![wazuh_alerts_sample](https://github.com/user-attachments/assets/26d15d4e-6b0c-4ff7-98c0-0d6d14e13701)
 
 -**Windows Agent Connected**
 
