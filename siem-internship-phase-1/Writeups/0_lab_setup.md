@@ -17,21 +17,117 @@ Verify proper log collection from Windows to Wazuh SIEM and establish baseline l
 
 ## Setup Steps
 ### **Ubuntu SIEM Server Configuration**:
-1. **Update System Packages**
-sudo apt update && sudo apt upgrade -y
-2. **Add Wazuh repository key**
-curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && sudo chmod 644 /usr/share/keyrings/wazuh.gpg
 
-3. **Add Wazuh APT repository**
-echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list
-
-4. **Install Wazuh Manager**
-sudo apt update
-sudo apt install -y wazuh-manager
 
 ### **Windows Target Machine Configuration**:
 
 
+1. Update System Packages
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+2. Install Wazuh Manager
+
+```bash
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import
+```
+
+```bash
+sudo chmod 644 /usr/share/keyrings/wazuh.gpg
+```
+
+```bash
+echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee -a /etc/apt/sources.list.d/wazuh.list
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -y wazuh-manager
+```
+
+3. Verify Wazuh Manager Installation
+
+```bash
+sudo systemctl status wazuh-manager
+```
+
+Expected output: `Active: active (running)`
+
+---
+
+Windows Target Machine Setup
+
+1. Install Wazuh Agent
+
+- Download from: [Wazuh Agent MSI](https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.2-1.msi)
+- Run the installer with default settings
+
+2. Configure Wazuh Agent
+
+Edit `C:\Program Files (x86)\ossec-agent\ossec.conf`:
+
+```xml
+<server>
+  <address>YOUR_UBUNTU_IP</address>
+  <port>1514</port>
+</server>
+```
+
+3. Restart Agent Service
+
+```powershell
+Restart-Service -Name WazuhSvc
+```
+
+```powershell
+Get-Service -Name WazuhSvc | Select-Object Status
+```
+
+Expected output: `Status: Running`
+
+---
+
+Verification & Enhanced Logging
+
+1. Check Log Forwarding from Agent
+
+```bash
+sudo tail -f /var/ossec/logs/alerts/alerts.log
+```
+
+Look for new events from the Windows agent
+
+2. Install Sysmon on Windows
+
+- Download from: [Sysmon Download](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
+- Extract to `C:\Sysmon`
+
+3. Configure and Run Sysmon
+
+```powershell
+cd C:\Sysmon
+```
+
+```powershell
+curl -o sysmonconfig.xml https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml
+```
+
+```powershell
+.\Sysmon.exe -accepteula -i sysmonconfig.xml
+```
+
+4. Verify Sysmon Logging
+
+```powershell
+Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 1
+```
+
+Should show a Sysmon startup or configuration event
 
 
 ## Evidence of Successful Setup
