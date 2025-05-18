@@ -18,8 +18,8 @@ Verify proper log collection from Windows to Wazuh SIEM and establish baseline l
 
 ## Config file
 - **ossec-agent/ossec.conf**
-- The Agent was Configured to Point to Ubuntu by setting the ip address of ubuntu as the server :
-- ![editing_ossec_conf](https://github.com/user-attachments/assets/61c976b3-b823-4dd7-a725-70807078b083)
+- The Agent was Configured to Point to Ubuntu by setting the ip address of ubuntu as the server : \n
+  ![editing_ossec_conf](https://github.com/user-attachments/assets/61c976b3-b823-4dd7-a725-70807078b083)
 
 
 ## Evidence of Successful Setup
