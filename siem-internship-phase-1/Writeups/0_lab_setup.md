@@ -1,5 +1,9 @@
 # Lab Setup Verification
 
+## Introduction
+In cybersecurity operations, centralizing and analyzing logs from multiple systems is critical for detecting threats, investigating incidents, and ensuring compliance. This lab sets up a Security Information and Event Management (SIEM) environment using Wazuh, an open-source SIEM platform, to collect and analyze security events from both Linux and Windows hosts. On Windows systems, Sysmon is deployed to enhance native logging by providing detailed information about process creation, network connections, and system changes. Together, Wazuh and Sysmon provide a powerful, real-time monitoring and alerting system for threat detection and visibility across the network.
+
+
 ## Description  
 Initial configuration of a cybersecurity lab with Wazuh SIEM on Ubuntu and Windows log forwarding, including Sysmon deployment for enhanced monitoring.
 
