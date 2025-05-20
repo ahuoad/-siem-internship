@@ -64,7 +64,8 @@ sudo apt install -y wazuh-manager
 sudo systemctl status wazuh-manager
 ```
 
- ![ubuntu_wazuh_status](https://github.com/user-attachments/assets/c47970d5-d383-4fc3-8ddc-5c7baa1274f0)
+![Uploading status.png…]()
+
  
 ---
 
