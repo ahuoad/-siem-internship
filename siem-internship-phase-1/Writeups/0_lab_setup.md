@@ -80,9 +80,9 @@ sudo systemctl status wazuh-manager
 Edit `C:\Program Files (x86)\ossec-agent\ossec.conf`:
 
 ```xml
-<!-- Configure agent to connect to Wazuh manager -->
+Configure agent to connect to Wazuh manager 
 <server>
-  <address>YOUR_UBUNTU_IP</address>
+  <address>UBUNTU_IP</address>
   <port>1514</port>
 </server>
 ```
